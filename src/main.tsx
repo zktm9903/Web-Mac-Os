@@ -1,10 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./MacOs.tsx";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import MacOs from './MacOs';
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>,
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <MacOs />
+  </React.StrictMode>
 );

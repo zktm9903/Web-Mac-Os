@@ -1,21 +1,14 @@
 import { css } from '@emotion/react';
 import './App.css';
 
-const MacOs = () => {
+export default function MacOs() {
   return (
     <div
-      css={css`
-        padding: 32px;
-        background-color: hotpink;
-        font-size: 24px;
-        border-radius: 4px;
-        &:hover {
-          color: ${'yellow'};
-        }
-      `}>
-      test
-    </div>
+      css={css({
+        height: '100vh',
+        backgroundSize: 'cover',
+        backgroundImage:
+          'url("https://images.pexels.com/photos/1460222/pexels-photo-1460222.jpeg")',
+      })}></div>
   );
-};
-
-export default MacOs;
+}

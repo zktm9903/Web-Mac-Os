@@ -33,5 +33,6 @@ function DateTime() {
   useEffect(() => {
     setInterval(() => setDateTime(new Date()), 1000);
   }, []);
+
   return <div>{dayjs(dateTime).format('ddd MMMM D h:mm A')}</div>;
 }

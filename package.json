@@ -14,7 +14,10 @@
     "dayjs": "^1.11.11",
     "framer-motion": "^11.1.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-rnd": "^10.4.10",
+    "react-router-dom": "^6.23.0",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

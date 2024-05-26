@@ -1,7 +1,8 @@
 import './index.css';
-import Dock from './commons/Dock';
 import { css } from '@emotion/react';
+import Dock from './commons/Dock';
 import TopBar from './commons/TopBar';
+import PlayGround from './commons/PlayGround';
 
 export default function MacOs() {
   return (
@@ -15,6 +16,7 @@ export default function MacOs() {
           'url("https://images.pexels.com/photos/1428277/pexels-photo-1428277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")',
       })}>
       <TopBar />
+      <PlayGround />
       <Dock />
     </div>
   );

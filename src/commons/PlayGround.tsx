@@ -116,11 +116,11 @@ const AppViewer = ({
       })}
       size={{ width, height }}
       position={{ x, y }}
-      onDragStop={(e, d) => {
+      onDragStop={(_e, d) => {
         setX(d.x);
         setY(d.y);
       }}
-      onResizeStop={(e, direction, ref, delta, position) => {
+      onResizeStop={(_e, _direction, ref, _delta, position) => {
         setWidth(+ref.style.width);
         setHeight(+ref.style.height);
         setX(position.x);

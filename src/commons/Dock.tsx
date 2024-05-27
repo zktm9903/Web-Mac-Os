@@ -23,6 +23,7 @@ export default function Dock() {
         borderRadius: '16px',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
+        zIndex: '987654321',
       })}>
       {APPS.filter((el) => el.name !== 'profile').map((app) => (
         <div

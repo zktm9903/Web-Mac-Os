@@ -161,8 +161,7 @@ const AppViewer = ({
           cursor: 'default',
           borderRadius: '0px 0px 8px 8px',
           overflow: 'hidden',
-        })}
-        onMouseDown={(e) => e.stopPropagation()}>
+        })}>
         {children}
       </div>
     </Rnd>

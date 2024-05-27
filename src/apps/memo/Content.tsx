@@ -5,6 +5,7 @@ export default function Content() {
   const [text, setText] = useState('hihi');
   return (
     <div
+      onMouseDown={(e) => e.stopPropagation()}
       css={css({
         height: '100%',
         backgroundColor: 'white',

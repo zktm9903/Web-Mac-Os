@@ -9,10 +9,18 @@ export const APPS: APP[] = [
     name: 'memo',
     icon: <MemoIcon />,
     content: <MemoContent />,
+    minWidth: 300,
+    minHeight: 300,
+    maxWidth: 500,
+    maxHeight: 500,
   },
   {
     name: 'profile',
     icon: <ProfileIcon />,
     content: <ProfileContent />,
+    minWidth: 300,
+    minHeight: 550,
+    maxWidth: 700,
+    maxHeight: 1000,
   },
 ];

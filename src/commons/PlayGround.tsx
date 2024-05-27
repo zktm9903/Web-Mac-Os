@@ -3,7 +3,14 @@ import { css } from '@emotion/react';
 import { Rnd } from 'react-rnd';
 import { APPS } from '../apps/apps';
 import { APP, ProcessStatus } from '../types/os';
-import { COLOR_OF_APP_BOX, COLOR_OF_APP_BOX_BORDER } from '../constant';
+import {
+  COLOR_OF_APP_BOX,
+  COLOR_OF_APP_BOX_BORDER,
+  DEFAULT_MAX_HEIGHT_OF_APP_BOX,
+  DEFAULT_MAX_WIDTH_OF_APP_BOX,
+  DEFAULT_MIN_HEIGHT_OF_APP_BOX,
+  DEFAULT_MIN_WIDTH_OF_APP_BOX,
+} from '../constant';
 import useProcesses from '../hooks/useProcesses';
 import { useHideApp } from '../hooks/useApp';
 import { useZindexStore } from '../stores/useZindexStore';
@@ -20,9 +27,10 @@ export default function PlayGround() {
       })}>
       {processes.map((process) => {
         const [name, status] = process;
+        const app = APPS.find((app) => app.name === name);
         return (
           <AppContainer
-            appName={name}
+            app={app!}
             appContent={APPS.find((app) => app.name === name)?.content!}
             appStatus={status}
           />
@@ -33,11 +41,11 @@ export default function PlayGround() {
 }
 
 const AppContainer = ({
-  appName,
+  app,
   appContent,
   appStatus,
 }: {
-  appName: APP['name'];
+  app: APP;
   appContent: JSX.Element;
   appStatus: ProcessStatus;
 }) => {
@@ -60,8 +68,12 @@ const AppContainer = ({
         setY={setY}
         setWidth={setWidth}
         setHeight={setHeight}
+        minWidth={app.minWidth}
+        minHeight={app.minHeight}
+        maxWidth={app.maxWidth}
+        maxHeight={app.maxHeight}
         redButtonEvent={() => {
-          hideApp(appName);
+          hideApp(app.name);
         }}>
         {appContent}
       </AppViewer>
@@ -76,6 +88,10 @@ interface AppViewerProps {
   width: number;
   height: number;
   children: ReactNode;
+  minWidth?: number;
+  minHeight?: number;
+  maxWidth?: number;
+  maxHeight?: number;
   setX: Dispatch<SetStateAction<number>>;
   setY: Dispatch<SetStateAction<number>>;
   setWidth: Dispatch<SetStateAction<number>>;
@@ -90,6 +106,10 @@ const AppViewer = ({
   width,
   height,
   children,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
   setX,
   setY,
   setWidth,
@@ -105,6 +125,10 @@ const AppViewer = ({
         setCurZindex(zIndex);
         increaseZindex();
       }}
+      minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
+      minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
+      maxWidth={maxWidth ?? DEFAULT_MAX_WIDTH_OF_APP_BOX}
+      maxHeight={maxHeight ?? DEFAULT_MAX_HEIGHT_OF_APP_BOX}
       css={css({
         visibility: visible ? 'visible' : 'hidden',
         backgroundColor: COLOR_OF_APP_BOX,

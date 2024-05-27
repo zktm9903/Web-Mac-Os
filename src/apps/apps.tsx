@@ -20,7 +20,7 @@ export const APPS: APP[] = [
     content: <ProfileContent />,
     minWidth: 300,
     minHeight: 550,
-    maxWidth: 700,
-    maxHeight: 1000,
+    maxWidth: 300,
+    maxHeight: 550,
   },
 ];

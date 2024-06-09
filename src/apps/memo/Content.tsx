@@ -14,77 +14,6 @@ import { v4 as uuidv4 } from 'uuid';
 import dayjs from 'dayjs';
 import { AnimatePresence } from 'framer-motion';
 
-const dummy: Memo[] = [
-  // {
-  //   id: '1',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '2',
-  //   title: '첫번째 메모',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '3',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '4',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '5',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '6',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '7',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '8',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '9',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-  // {
-  //   id: '10',
-  //   title: '첫번째 메모',
-  //   writing: '첫번째 메모의 내용이다. <MemoInfoBox />',
-  //   createdDate: new Date('2024/05/23'),
-  //   updatedDate: new Date('2024/05/24'),
-  // },
-];
-
 export default function Content() {
   // =================== 사이즈 조절 ===================
   const [width, setWidth] = useState(DEFAULT_MIN_WIDTH_OF_LEFT_BOX);
@@ -101,7 +30,7 @@ export default function Content() {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // =================== 메모 ===================
-  const [memos, setMemos] = useState<Memo[]>(dummy);
+  const [memos, setMemos] = useState<Memo[]>([]);
   const [selectedId, setSelectedId] = useState<Memo['id'] | null>(null);
 
   const createNewMemo = () => {
@@ -138,11 +67,6 @@ export default function Content() {
       })
     );
   };
-
-  useEffect(() => {
-    if (memos.length === 0) return;
-    if (memos.at(-1)?.writing === '') setSelectedId(memos.at(-1)?.id!);
-  }, [memos]);
 
   return (
     <>
@@ -237,8 +161,8 @@ export default function Content() {
           })}>
           <div
             css={css({
-              visibility: selectedId ? 'visible' : 'hidden',
-              display: 'flex',
+              display: selectedId ? 'flex' : 'none',
+
               flexDirection: 'column',
               height: '100%',
             })}>

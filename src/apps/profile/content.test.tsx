@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Profile, ProfileProps } from './Content';
+import { Profile, ProfileProps } from './Profile';
 import userEvent from '@testing-library/user-event';
 
 describe('메모앱', () => {

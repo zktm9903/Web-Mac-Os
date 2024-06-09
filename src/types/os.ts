@@ -1,7 +1,9 @@
+import { LazyExoticComponent } from 'react';
+
 export interface APP {
   name: string;
   icon: JSX.Element;
-  content: JSX.Element;
+  content: LazyExoticComponent<() => JSX.Element>;
   minWidth: number;
   minHeight: number;
   maxWidth: number;

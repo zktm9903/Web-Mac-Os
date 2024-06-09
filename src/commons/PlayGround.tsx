@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
+import { Dispatch, ReactNode, SetStateAction, Suspense, useState } from 'react';
 import { css } from '@emotion/react';
 import { Rnd } from 'react-rnd';
 import { APPS } from '../apps/apps';
@@ -33,7 +33,7 @@ export default function PlayGround() {
           <AppContainer
             key={name}
             app={app!}
-            appContent={APPS.find((app) => app.name === name)?.content!}
+            AppContent={APPS.find((app) => app.name === name)?.content!}
             appStatus={status}
           />
         );
@@ -44,11 +44,11 @@ export default function PlayGround() {
 
 const AppContainer = ({
   app,
-  appContent,
+  AppContent,
   appStatus,
 }: {
   app: APP;
-  appContent: JSX.Element;
+  AppContent: APP['content'];
   appStatus: ProcessStatus;
 }) => {
   const [x, setX] = useState(200);
@@ -78,7 +78,9 @@ const AppContainer = ({
         redButtonEvent={() => {
           hideApp(app.name);
         }}>
-        {appContent}
+        <Suspense fallback={<></>}>
+          <AppContent />
+        </Suspense>
       </AppViewer>
     </>
   );

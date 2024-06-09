@@ -28,6 +28,7 @@ export default function Dock() {
       })}>
       {APPS.map((app) => (
         <div
+          key={app.name}
           css={css({ position: 'relative' })}
           onClick={() => {
             runApp(app.name);

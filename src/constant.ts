@@ -1,6 +1,7 @@
 export const COLOR_OF_APP_BOX = '#291F1D';
 export const COLOR_OF_APP_BOX_BORDER = '#373737';
 
+export const DEFAULT_HEIGHT_OF_APP_BOX_HEADER = 50;
 export const DEFAULT_MIN_WIDTH_OF_APP_BOX = 300;
 export const DEFAULT_MIN_HEIGHT_OF_APP_BOX = 300;
 export const DEFAULT_MAX_WIDTH_OF_APP_BOX = 1000;

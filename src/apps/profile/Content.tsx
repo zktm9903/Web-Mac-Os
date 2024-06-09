@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
+import { Fragment } from 'react';
 
 export default function Content() {
   return (
     <Profile
-      imgSrc={'../../../public/me.jpg'}
+      imgSrc={'/me3.jpg'}
       name={'SangCheol Lee'}
       sub={'05, 1998'}
       spec={[
@@ -60,7 +61,7 @@ const Profile = ({ imgSrc, name, sub, spec, moreInfoSrc }: ProfileProps) => {
         {spec.map((pair) => {
           const [key, value] = pair;
           return (
-            <>
+            <Fragment key={key}>
               <p
                 css={css({
                   textAlign: 'right',
@@ -77,7 +78,7 @@ const Profile = ({ imgSrc, name, sub, spec, moreInfoSrc }: ProfileProps) => {
                 })}>
                 {value}
               </p>
-            </>
+            </Fragment>
           );
         })}
       </div>

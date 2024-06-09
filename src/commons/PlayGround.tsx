@@ -6,6 +6,7 @@ import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
   COLOR_OF_APP_BOX_BORDER,
+  DEFAULT_HEIGHT_OF_APP_BOX_HEADER,
   DEFAULT_MAX_HEIGHT_OF_APP_BOX,
   DEFAULT_MAX_WIDTH_OF_APP_BOX,
   DEFAULT_MIN_HEIGHT_OF_APP_BOX,
@@ -30,6 +31,7 @@ export default function PlayGround() {
         const app = APPS.find((app) => app.name === name);
         return (
           <AppContainer
+            key={name}
             app={app!}
             appContent={APPS.find((app) => app.name === name)?.content!}
             appStatus={status}
@@ -59,6 +61,7 @@ const AppContainer = ({
   return (
     <>
       <AppViewer
+        appName={app.name}
         visible={appStatus === 'show'}
         x={x}
         y={y}
@@ -82,6 +85,7 @@ const AppContainer = ({
 };
 
 interface AppViewerProps {
+  appName: string;
   visible: boolean;
   x: number;
   y: number;
@@ -100,6 +104,7 @@ interface AppViewerProps {
 }
 
 const AppViewer = ({
+  appName,
   visible,
   x,
   y,
@@ -121,14 +126,11 @@ const AppViewer = ({
 
   return (
     <Rnd
-      onMouseDown={() => {
-        setCurZindex(zIndex);
-        increaseZindex();
-      }}
       minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
       minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
       maxWidth={maxWidth ?? DEFAULT_MAX_WIDTH_OF_APP_BOX}
       maxHeight={maxHeight ?? DEFAULT_MAX_HEIGHT_OF_APP_BOX}
+      size={{ width, height }}
       css={css({
         visibility: visible ? 'visible' : 'hidden',
         backgroundColor: COLOR_OF_APP_BOX,
@@ -138,7 +140,10 @@ const AppViewer = ({
         boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
         zIndex: curZindex,
       })}
-      size={{ width, height }}
+      onMouseDown={() => {
+        setCurZindex(zIndex);
+        increaseZindex();
+      }}
       position={{ x, y }}
       onDragStop={(_e, d) => {
         setX(d.x);
@@ -150,11 +155,19 @@ const AppViewer = ({
         setX(position.x);
         setY(position.y);
       }}>
-      <ThreeButtons redButtonEvent={redButtonEvent} />
+      <header
+        app-box-header={appName}
+        css={css({
+          display: 'flex',
+          height: DEFAULT_HEIGHT_OF_APP_BOX_HEADER,
+          alignItems: 'center',
+        })}>
+        <ThreeButtons redButtonEvent={redButtonEvent} />
+      </header>
       <div
         css={css({
           position: 'absolute',
-          top: '50px',
+          top: DEFAULT_HEIGHT_OF_APP_BOX_HEADER,
           bottom: '0px',
           left: '0px',
           right: '0px',
@@ -179,10 +192,10 @@ const ThreeButtons = ({ redButtonEvent }: ThreeButtonsProps) => {
     <>
       {[0, 1, 2].map((_, idx) => (
         <button
+          key={idx}
           onMouseDown={(e) => e.stopPropagation()}
           css={css({
             position: 'absolute',
-            top: '18px',
             left: left[idx],
             height: '14px',
             width: '14px',

@@ -20,7 +20,7 @@ export default function Content() {
   );
 }
 
-interface ProfileProps {
+export interface ProfileProps {
   imgSrc: string;
   name: string;
   sub: string;
@@ -28,7 +28,13 @@ interface ProfileProps {
   moreInfoSrc: string;
 }
 
-const Profile = ({ imgSrc, name, sub, spec, moreInfoSrc }: ProfileProps) => {
+export const Profile = ({
+  imgSrc,
+  name,
+  sub,
+  spec,
+  moreInfoSrc,
+}: ProfileProps) => {
   return (
     <div
       css={css({

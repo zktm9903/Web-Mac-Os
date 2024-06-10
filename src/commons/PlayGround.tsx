@@ -1,7 +1,15 @@
-import { Dispatch, ReactNode, SetStateAction, Suspense, useState } from 'react';
-import { css } from '@emotion/react';
-import { Rnd } from 'react-rnd';
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  Suspense,
+  useMemo,
+  useState,
+} from 'react';
 import { APPS } from '../apps/apps';
+import useProcesses from '../hooks/useProcesses';
+import { useHideApp } from '../hooks/useApp';
+import useAppZindexStore from '../stores/useAppZindexStore';
 import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
@@ -12,9 +20,9 @@ import {
   DEFAULT_MIN_HEIGHT_OF_APP_BOX,
   DEFAULT_MIN_WIDTH_OF_APP_BOX,
 } from '../constant';
-import useProcesses from '../hooks/useProcesses';
-import { useHideApp } from '../hooks/useApp';
-import { useZindexStore } from '../stores/useZindexStore';
+import { css } from '@emotion/react';
+import { Rnd } from 'react-rnd';
+import useAppZindex from '../hooks/useAppZindex';
 
 export default function PlayGround() {
   const processes = useProcesses();
@@ -123,8 +131,7 @@ const AppViewer = ({
   setHeight,
   redButtonEvent,
 }: AppViewerProps) => {
-  const [curZindex, setCurZindex] = useState(0);
-  const { zIndex, increaseZindex } = useZindexStore((state) => state);
+  const { appZindex, updateAppZindex } = useAppZindex(appName);
 
   return (
     <Rnd
@@ -140,11 +147,10 @@ const AppViewer = ({
         borderRadius: '8px',
         overflow: 'hidden',
         boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)',
-        zIndex: curZindex,
+        zIndex: appZindex,
       })}
       onMouseDown={() => {
-        setCurZindex(zIndex);
-        increaseZindex();
+        updateAppZindex();
       }}
       position={{ x, y }}
       onDragStop={(_e, d) => {

@@ -20,13 +20,13 @@ describe('메모앱', () => {
     const openSpy = vi.spyOn(window, 'open');
     await userEvent.click(screen.getByText(/more info/i));
 
+    expect(screen.getByRole('img')).toHaveAttribute('src', dummy.imgSrc);
     expect(screen.getByText(dummy.name)).toBeInTheDocument();
     expect(screen.getByText(dummy.sub)).toBeInTheDocument();
     expect(screen.getByText(dummy.spec[0][0])).toBeInTheDocument();
     expect(screen.getByText(dummy.spec[0][1])).toBeInTheDocument();
     expect(screen.getByText(dummy.spec[1][0])).toBeInTheDocument();
     expect(screen.getByText(dummy.spec[1][1])).toBeInTheDocument();
-    expect(screen.getByRole('img')).toHaveAttribute('src', dummy.imgSrc);
     expect(openSpy).toHaveBeenCalledTimes(1);
     expect(openSpy).toHaveBeenCalledWith(dummy.moreInfoSrc, '_blank');
   });

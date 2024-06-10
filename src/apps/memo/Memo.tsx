@@ -1,4 +1,12 @@
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import DragBetween from './components/DragBetween';
 import MemoInfoBox from './components/MemoInfoBox';
 import ButtonWrapper from './components/ButtonWrapper';
@@ -8,13 +16,45 @@ import { Memo } from './types';
 
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsPencilSquare } from 'react-icons/bs';
-import { css } from '@emotion/react';
-import { produce } from 'immer';
-import { v4 as uuidv4 } from 'uuid';
-import dayjs from 'dayjs';
 import { AnimatePresence } from 'framer-motion';
+import { css } from '@emotion/react';
+import { v4 as uuidv4 } from 'uuid';
+import { produce } from 'immer';
+import dayjs from 'dayjs';
+import useAppZindex from '../../hooks/useAppZindex';
+
+export const MemosDummy = [
+  {
+    id: '1',
+    writing:
+      '오늘은 클라이밍 가는날~\n\n오늘은 보라색 최소 100개는 깨고말겠다..',
+    createdDate: new Date('2024-5-11'),
+    updatedDate: new Date('2024-5-15'),
+  },
+  {
+    id: '2',
+    writing: '오늘은 비가왔다\n\n밖에 비온다 주륵주륵',
+    createdDate: new Date('2024-6-1'),
+    updatedDate: new Date('2024-6-4'),
+  },
+];
 
 export default function Content() {
+  const [memos, setMemos] = useState<Memo[]>(MemosDummy);
+
+  return <Memos memos={memos} setMemos={setMemos} />;
+}
+
+const Memos = ({
+  memos,
+  setMemos,
+}: {
+  memos: Memo[];
+  setMemos: Dispatch<SetStateAction<Memo[]>>;
+}) => {
+  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { updateAppZindex } = useAppZindex('memo');
+
   // =================== 사이즈 조절 ===================
   const [width, setWidth] = useState(DEFAULT_MIN_WIDTH_OF_LEFT_BOX);
   const ref = useRef<HTMLDivElement | null>(null);
@@ -27,10 +67,7 @@ export default function Content() {
   }, []);
 
   // =================== 메모 ===================
-  const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  // =================== 메모 ===================
-  const [memos, setMemos] = useState<Memo[]>([]);
   const [selectedId, setSelectedId] = useState<Memo['id'] | null>(null);
 
   const createNewMemo = () => {
@@ -101,7 +138,10 @@ export default function Content() {
 
       <div
         ref={ref}
-        onMouseDown={(e) => e.stopPropagation()}
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          updateAppZindex();
+        }}
         css={css({
           position: 'relative',
           display: 'flex',
@@ -162,7 +202,6 @@ export default function Content() {
           <div
             css={css({
               display: selectedId ? 'flex' : 'none',
-
               flexDirection: 'column',
               height: '100%',
             })}>
@@ -199,4 +238,4 @@ export default function Content() {
       </div>
     </>
   );
-}
+};

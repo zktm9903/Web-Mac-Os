@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 export default function TopBar() {
   return (
     <div
+      id="topbar"
       css={css({
         position: 'fixed',
         top: 0,

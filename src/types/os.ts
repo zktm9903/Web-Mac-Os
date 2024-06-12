@@ -8,6 +8,7 @@ export interface APP {
   minHeight: number;
   maxWidth: number;
   maxHeight: number;
+  resizable: boolean;
 }
 
 export type ProcessStatus = 'show' | 'hide';

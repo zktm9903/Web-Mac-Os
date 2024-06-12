@@ -23,7 +23,7 @@ import { produce } from 'immer';
 import dayjs from 'dayjs';
 import useAppZindex from '../../hooks/useAppZindex';
 
-export const MemosDummy = [
+const MemosDummy = [
   {
     id: '1',
     writing:

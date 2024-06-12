@@ -4,7 +4,7 @@ import MemoInfoBox from './MemoInfoBox';
 
 describe('메모 정보 박스', () => {
   it('원하는 정보가 표시된다.', async () => {
-    const title = '오늘은 클라이밍 가는날~';
+    const title = '오늘은 클라이밍 가는날!';
     const content = '오늘은 보라색 최소 100개는 깨고말겠다..';
     const _createdDate = ['2024', '05', '11'];
     const _updatedDate = ['2024', '05', '15'];

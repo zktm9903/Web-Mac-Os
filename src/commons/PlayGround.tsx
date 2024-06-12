@@ -1,15 +1,7 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  Suspense,
-  useMemo,
-  useState,
-} from 'react';
+import { Dispatch, ReactNode, SetStateAction, Suspense, useState } from 'react';
 import { APPS } from '../apps/apps';
 import useProcesses from '../hooks/useProcesses';
 import { useHideApp } from '../hooks/useApp';
-import useAppZindexStore from '../stores/useAppZindexStore';
 import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
@@ -38,12 +30,16 @@ export default function PlayGround() {
         const [name, status] = process;
         const app = APPS.find((app) => app.name === name);
         return (
-          <AppContainer
-            key={name}
-            app={app!}
-            AppContent={APPS.find((app) => app.name === name)?.content!}
-            appStatus={status}
-          />
+          <>
+            {app && (
+              <AppContainer
+                key={name}
+                app={app!}
+                AppContent={app.content}
+                appStatus={status}
+              />
+            )}
+          </>
         );
       })}
     </div>

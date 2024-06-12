@@ -31,9 +31,9 @@ jobs:
 
       - name: Install all dependencies
         run: yarn install
-        
-      - name: Run Lint Tests
-        run: yarn lint
 
       - name: Run Vitest Tests
         run: yarn run test
+        
+      - name: Run Lint Tests
+        run: yarn lint

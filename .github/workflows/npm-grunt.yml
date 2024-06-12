@@ -9,7 +9,7 @@ on: pull_request
 # For more detail on this section visit https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobs
 jobs:
   # ID of the job
-  run-jest-tests:
+  run-vitest-tests:
     # Name of the job as it will be displayed in GitHub
     name: Vitest Tests
     # Machine which this action will be run on. For a list of all the machines available/how to run on self hosted machine visit
@@ -31,6 +31,9 @@ jobs:
 
       - name: Install all dependencies
         run: yarn install
+        
+      - name: Run Lint Tests
+        run: yarn lint
 
       - name: Run Vitest Tests
         run: yarn run test

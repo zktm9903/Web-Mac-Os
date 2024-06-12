@@ -30,6 +30,7 @@ export function DockViewer({
 }) {
   return (
     <motion.div
+      id="dock"
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}

@@ -62,6 +62,22 @@ const AppContainer = ({
 
   const hideApp = useHideApp();
 
+  const redButtonEvent = () => {
+    hideApp(app.name);
+  };
+
+  const greenButtonEvent = () => {
+    const dock = document.getElementById('dock');
+    const topbar = document.getElementById('topbar');
+
+    if (!dock?.offsetTop || !topbar?.offsetHeight) return;
+
+    setX(0);
+    setY(0);
+    setWidth(window.innerWidth);
+    setHeight((dock?.offsetTop - topbar?.offsetHeight) as number);
+  };
+
   return (
     <>
       <AppViewer
@@ -79,9 +95,8 @@ const AppContainer = ({
         minHeight={app.minHeight}
         maxWidth={app.maxWidth}
         maxHeight={app.maxHeight}
-        redButtonEvent={() => {
-          hideApp(app.name);
-        }}>
+        redButtonEvent={redButtonEvent}
+        greenButtonEvent={app.resizable ? greenButtonEvent : undefined}>
         <Suspense fallback={<></>}>
           <AppContent />
         </Suspense>
@@ -154,14 +169,19 @@ export const AppViewer = ({
       }}
       position={{ x, y }}
       onDragStop={(_e, d) => {
-        setX(d.x);
-        setY(d.y);
+        if (d.x < 0) setX(0);
+        else setX(d.x);
+        if (d.y < 0) setY(0);
+        else setY(d.y);
       }}
       onResizeStop={(_e, _direction, ref, _delta, position) => {
         setWidth(+ref.style.width);
         setHeight(+ref.style.height);
-        setX(position.x);
-        setY(position.y);
+
+        if (position.x < 0) setX(0);
+        else setX(position.x);
+        if (position.y < 0) setY(0);
+        else setY(position.y);
       }}>
       <header
         app-box-header={appName}
@@ -201,14 +221,6 @@ interface ThreeButtonsProps {
   greenButtonEvent?: () => void;
 }
 
-const threeButtonStyle: { [key: string]: string } = {
-  position: 'absolute',
-  height: '14px',
-  width: '14px',
-  borderRadius: '50%',
-  border: '0',
-};
-
 const ThreeButtons = ({
   updateAppZindex,
   redButtonEvent,
@@ -216,21 +228,25 @@ const ThreeButtons = ({
   greenButtonEvent,
 }: ThreeButtonsProps) => {
   const colors = ['#FB4646', '#FEB024', '#28C131'];
+  const unableColor = '#413835';
   const left = ['18px', '40px', '62px'];
+  const unable = [!redButtonEvent, true, !greenButtonEvent];
+
   return (
     <>
       {[0, 1, 2].map((_, idx) => (
         <button
+          disabled={unable[idx]}
           key={idx}
           onMouseDown={(e) => e.stopPropagation()}
           css={css({
             position: 'absolute',
-            left: left[idx],
             height: '14px',
             width: '14px',
-            backgroundColor: colors[idx],
             borderRadius: '50%',
             border: '0',
+            left: left[idx],
+            backgroundColor: unable[idx] ? unableColor : colors[idx],
           })}
           onClick={() => {
             updateAppZindex();

@@ -21,7 +21,7 @@ export default function DragBetween({
         if (
           afterWidth < DEFAULT_MIN_WIDTH_OF_LEFT_BOX ||
           afterWidth > DEFAULT_MAX_WIDTH_OF_LEFT_BOX ||
-          dragRef.current?.offsetWidth! - afterWidth < 50
+          (dragRef.current && dragRef.current?.offsetWidth - afterWidth < 50)
         )
           return;
         setWidth(afterWidth);

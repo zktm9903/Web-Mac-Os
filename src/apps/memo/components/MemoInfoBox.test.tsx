@@ -23,6 +23,6 @@ describe('메모 정보 박스', () => {
     expect(screen.getByText(_updatedDate.join('/'))).toBeInTheDocument();
 
     await userEvent.click(screen.getByRole('button'));
-    expect(clickEvent).toHaveBeenCalledTimes(6);
+    expect(clickEvent).toHaveBeenCalledTimes(1);
   });
 });

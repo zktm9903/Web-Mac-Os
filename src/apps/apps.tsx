@@ -10,8 +10,9 @@ export const APPS: APP[] = [
     content: lazy(() => import('./memo/Memo')),
     minWidth: 500,
     minHeight: 500,
-    maxWidth: 900,
-    maxHeight: 900,
+    maxWidth: 98765321,
+    maxHeight: 98765321,
+    resizable: true,
   },
   {
     name: 'profile',
@@ -21,5 +22,6 @@ export const APPS: APP[] = [
     minHeight: 550,
     maxWidth: 300,
     maxHeight: 550,
+    resizable: false,
   },
 ];

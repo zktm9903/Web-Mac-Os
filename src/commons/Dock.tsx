@@ -4,13 +4,33 @@ import { APPS } from '../apps/apps';
 import { ReactNode } from 'react';
 import { useRunApp } from '../hooks/useApp';
 import useProcesses from '../hooks/useProcesses';
+import { APP } from '../types/os';
 
 export default function Dock() {
   const runApp = useRunApp();
   const processes = useProcesses();
 
   return (
+    <DockViewer
+      allApps={APPS}
+      runningApps={processes.map((p) => p[0])}
+      appIconOnClick={runApp}
+    />
+  );
+}
+
+export function DockViewer({
+  allApps,
+  runningApps,
+  appIconOnClick,
+}: {
+  allApps: APP[];
+  runningApps: APP['name'][];
+  appIconOnClick: (appName: string) => void;
+}) {
+  return (
     <motion.div
+      id="dock"
       initial={{ y: 100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -26,15 +46,15 @@ export default function Dock() {
         boxShadow: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)',
         zIndex: '987654321',
       })}>
-      {APPS.map((app) => (
+      {allApps.map((app) => (
         <div
           key={app.name}
           css={css({ position: 'relative' })}
           onClick={() => {
-            runApp(app.name);
+            appIconOnClick(app.name);
           }}>
           <IconBox key={app.name}>{app.icon}</IconBox>
-          {!!processes.find((el) => el[0] === app.name) && <OnProcessDot />}
+          {!!runningApps.find((el) => el === app.name) && <OnProcessDot />}
         </div>
       ))}
     </motion.div>

@@ -106,10 +106,12 @@ interface AppViewerProps {
   setY: Dispatch<SetStateAction<number>>;
   setWidth: Dispatch<SetStateAction<number>>;
   setHeight: Dispatch<SetStateAction<number>>;
-  redButtonEvent: () => void;
+  redButtonEvent?: () => void;
+  yellowButtonEvent?: () => void;
+  greenButtonEvent?: () => void;
 }
 
-const AppViewer = ({
+export const AppViewer = ({
   appName,
   visible,
   x,
@@ -126,6 +128,8 @@ const AppViewer = ({
   setWidth,
   setHeight,
   redButtonEvent,
+  yellowButtonEvent,
+  greenButtonEvent,
 }: AppViewerProps) => {
   const { appZindex, updateAppZindex } = useAppZindex(appName);
 
@@ -166,7 +170,12 @@ const AppViewer = ({
           height: DEFAULT_HEIGHT_OF_APP_BOX_HEADER,
           alignItems: 'center',
         })}>
-        <ThreeButtons redButtonEvent={redButtonEvent} />
+        <ThreeButtons
+          updateAppZindex={updateAppZindex}
+          redButtonEvent={redButtonEvent}
+          yellowButtonEvent={yellowButtonEvent}
+          greenButtonEvent={greenButtonEvent}
+        />
       </header>
       <div
         css={css({
@@ -186,10 +195,26 @@ const AppViewer = ({
 };
 
 interface ThreeButtonsProps {
-  redButtonEvent: () => void;
+  updateAppZindex: () => void;
+  redButtonEvent?: () => void;
+  yellowButtonEvent?: () => void;
+  greenButtonEvent?: () => void;
 }
 
-const ThreeButtons = ({ redButtonEvent }: ThreeButtonsProps) => {
+const threeButtonStyle: { [key: string]: string } = {
+  position: 'absolute',
+  height: '14px',
+  width: '14px',
+  borderRadius: '50%',
+  border: '0',
+};
+
+const ThreeButtons = ({
+  updateAppZindex,
+  redButtonEvent,
+  yellowButtonEvent,
+  greenButtonEvent,
+}: ThreeButtonsProps) => {
   const colors = ['#FB4646', '#FEB024', '#28C131'];
   const left = ['18px', '40px', '62px'];
   return (
@@ -208,7 +233,10 @@ const ThreeButtons = ({ redButtonEvent }: ThreeButtonsProps) => {
             border: '0',
           })}
           onClick={() => {
-            if (idx === 0) redButtonEvent();
+            updateAppZindex();
+            if (idx === 0) redButtonEvent && redButtonEvent();
+            if (idx === 1) yellowButtonEvent && yellowButtonEvent();
+            if (idx === 2) greenButtonEvent && greenButtonEvent();
           }}
         />
       ))}

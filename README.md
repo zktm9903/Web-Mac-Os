@@ -24,6 +24,7 @@
 - [x] git action 사용하여 pull request 전 자동 테스팅
 - [x] App lazy loading & chunk
 - [x] App 추상화 (왼쪽 상단 버튼, drag & drop, resize)
+- [ ] 배경 이미지 로딩 최적화
 - [x] Profile app 추가
 - [x] Memo app 추가
 - [ ] Weather app 추가

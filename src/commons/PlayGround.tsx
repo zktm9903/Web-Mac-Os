@@ -1,7 +1,16 @@
-import { Dispatch, ReactNode, SetStateAction, Suspense, useState } from 'react';
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  Suspense,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
 import { APPS } from '../apps/apps';
-import useProcesses from '../hooks/useProcesses';
 import { useHideApp } from '../hooks/useApp';
+import useAppZindex from '../hooks/useAppZindex';
+import useProcesses from '../hooks/useProcesses';
 import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
@@ -12,37 +21,42 @@ import {
   DEFAULT_MIN_HEIGHT_OF_APP_BOX,
   DEFAULT_MIN_WIDTH_OF_APP_BOX,
 } from '../constant';
-import { css } from '@emotion/react';
 import { Rnd } from 'react-rnd';
-import useAppZindex from '../hooks/useAppZindex';
+import { css } from '@emotion/react';
+import useFullHeightOfAppBox from '../hooks/useFullHeightOfAppBox';
+
+const FullHeightOfAppBoxContext = createContext(0);
 
 export default function PlayGround() {
   const processes = useProcesses();
+  const { fullHeightOfAppBox } = useFullHeightOfAppBox();
 
   return (
-    <div
-      css={css({
-        position: 'relative',
-        width: '100%',
-        marginTop: '26.5px',
-      })}>
-      {processes.map((process) => {
-        const [name, status] = process;
-        const app = APPS.find((app) => app.name === name);
-        return (
-          <>
-            {app && (
-              <AppContainer
-                key={name}
-                app={app!}
-                AppContent={app.content}
-                appStatus={status}
-              />
-            )}
-          </>
-        );
-      })}
-    </div>
+    <FullHeightOfAppBoxContext.Provider value={fullHeightOfAppBox}>
+      <div
+        css={css({
+          position: 'relative',
+          width: '100%',
+          marginTop: '26.5px',
+        })}>
+        {processes.map((process) => {
+          const [name, status] = process;
+          const app = APPS.find((app) => app.name === name);
+          return (
+            <>
+              {app && (
+                <AppContainer
+                  key={name}
+                  app={app!}
+                  AppContent={app.content}
+                  appStatus={status}
+                />
+              )}
+            </>
+          );
+        })}
+      </div>
+    </FullHeightOfAppBoxContext.Provider>
   );
 }
 
@@ -59,6 +73,7 @@ const AppContainer = ({
   const [y, setY] = useState(200);
   const [width, setWidth] = useState(200);
   const [height, setHeight] = useState(200);
+  const [isFullSize, setIsFullSize] = useState(false);
 
   const hideApp = useHideApp();
 
@@ -67,41 +82,32 @@ const AppContainer = ({
   };
 
   const greenButtonEvent = () => {
-    const dock = document.getElementById('dock');
-    const topbar = document.getElementById('topbar');
-
-    if (!dock?.offsetTop || !topbar?.offsetHeight) return;
-
-    setX(0);
-    setY(0);
-    setWidth(window.innerWidth);
-    setHeight((dock?.offsetTop - topbar?.offsetHeight) as number);
+    setIsFullSize((e) => !e);
   };
 
   return (
-    <>
-      <AppViewer
-        appName={app.name}
-        visible={appStatus === 'show'}
-        x={x}
-        y={y}
-        width={width}
-        height={height}
-        setX={setX}
-        setY={setY}
-        setWidth={setWidth}
-        setHeight={setHeight}
-        minWidth={app.minWidth}
-        minHeight={app.minHeight}
-        maxWidth={app.maxWidth}
-        maxHeight={app.maxHeight}
-        redButtonEvent={redButtonEvent}
-        greenButtonEvent={app.resizable ? greenButtonEvent : undefined}>
-        <Suspense fallback={<></>}>
-          <AppContent />
-        </Suspense>
-      </AppViewer>
-    </>
+    <AppViewer
+      appName={app.name}
+      visible={appStatus === 'show'}
+      x={x}
+      y={y}
+      width={width}
+      height={height}
+      setX={setX}
+      setY={setY}
+      setWidth={setWidth}
+      setHeight={setHeight}
+      minWidth={app.minWidth}
+      minHeight={app.minHeight}
+      maxWidth={app.maxWidth}
+      maxHeight={app.maxHeight}
+      isFullSize={isFullSize}
+      redButtonEvent={redButtonEvent}
+      greenButtonEvent={app.resizable ? greenButtonEvent : undefined}>
+      <Suspense fallback={<></>}>
+        <AppContent />
+      </Suspense>
+    </AppViewer>
   );
 };
 
@@ -117,6 +123,7 @@ interface AppViewerProps {
   minHeight?: number;
   maxWidth?: number;
   maxHeight?: number;
+  isFullSize?: boolean;
   setX: Dispatch<SetStateAction<number>>;
   setY: Dispatch<SetStateAction<number>>;
   setWidth: Dispatch<SetStateAction<number>>;
@@ -138,6 +145,7 @@ export const AppViewer = ({
   minHeight,
   maxWidth,
   maxHeight,
+  isFullSize,
   setX,
   setY,
   setWidth,
@@ -147,14 +155,20 @@ export const AppViewer = ({
   greenButtonEvent,
 }: AppViewerProps) => {
   const { appZindex, updateAppZindex } = useAppZindex(appName);
+  const fullHeightOfAppBox = useContext(FullHeightOfAppBoxContext);
 
   return (
     <Rnd
+      app-box={appName}
       minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
       minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
       maxWidth={maxWidth ?? DEFAULT_MAX_WIDTH_OF_APP_BOX}
       maxHeight={maxHeight ?? DEFAULT_MAX_HEIGHT_OF_APP_BOX}
-      size={{ width, height }}
+      position={{ x: isFullSize ? 0 : x, y: isFullSize ? 0 : y }}
+      size={{
+        width: isFullSize ? '100vw' : width,
+        height: isFullSize ? fullHeightOfAppBox : height,
+      }}
       css={css({
         visibility: visible ? 'visible' : 'hidden',
         backgroundColor: COLOR_OF_APP_BOX,
@@ -167,7 +181,6 @@ export const AppViewer = ({
       onMouseDown={() => {
         updateAppZindex();
       }}
-      position={{ x, y }}
       onDragStop={(_e, d) => {
         if (d.x < 0) setX(0);
         else setX(d.x);
@@ -236,6 +249,9 @@ const ThreeButtons = ({
     <>
       {[0, 1, 2].map((_, idx) => (
         <button
+          app-three-button-color={
+            idx === 0 ? 'red' : idx === 1 ? 'yellow' : 'green'
+          }
           disabled={unable[idx]}
           key={idx}
           onMouseDown={(e) => e.stopPropagation()}

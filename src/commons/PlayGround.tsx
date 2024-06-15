@@ -159,6 +159,7 @@ export const AppViewer = ({
 
   return (
     <Rnd
+      app-box={appName}
       minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
       minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
       maxWidth={maxWidth ?? DEFAULT_MAX_WIDTH_OF_APP_BOX}
@@ -248,6 +249,9 @@ const ThreeButtons = ({
     <>
       {[0, 1, 2].map((_, idx) => (
         <button
+          app-three-button-color={
+            idx === 0 ? 'red' : idx === 1 ? 'yellow' : 'green'
+          }
           disabled={unable[idx]}
           key={idx}
           onMouseDown={(e) => e.stopPropagation()}

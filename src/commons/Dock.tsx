@@ -47,15 +47,21 @@ export function DockViewer({
         zIndex: '987654321',
       })}>
       {allApps.map((app) => (
-        <div
+        <button
+          app-icon={app.name}
           key={app.name}
-          css={css({ position: 'relative' })}
+          css={css({
+            position: 'relative',
+            padding: 0,
+            backgroundColor: 'inherit',
+            border: '0',
+          })}
           onClick={() => {
             appIconOnClick(app.name);
           }}>
           <IconBox key={app.name}>{app.icon}</IconBox>
           {!!runningApps.find((el) => el === app.name) && <OnProcessDot />}
-        </div>
+        </button>
       ))}
     </motion.div>
   );

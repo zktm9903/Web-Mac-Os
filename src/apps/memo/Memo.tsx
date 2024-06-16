@@ -11,6 +11,7 @@ import DragBetween from './components/DragBetween';
 import MemoInfoBox from './components/MemoInfoBox';
 import ButtonWrapper from './components/ButtonWrapper';
 import AppBoxHeaderInjection from '../AppBoxHeaderInjection';
+import { useUpdateAppZindex } from '../../hooks/useAppZindex';
 import { DEFAULT_MIN_WIDTH_OF_LEFT_BOX } from './constant';
 import { Memo } from './types';
 
@@ -21,7 +22,6 @@ import { css } from '@emotion/react';
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
-import { useUpdateAppZindex } from '../../hooks/useAppZindex';
 
 const MemosDummy = [
   {

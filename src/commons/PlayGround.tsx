@@ -60,7 +60,7 @@ export default function PlayGround() {
   );
 }
 
-const AppContainer = ({
+export const AppContainer = ({
   app,
   AppContent,
   appStatus,

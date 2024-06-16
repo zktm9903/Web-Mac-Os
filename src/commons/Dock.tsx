@@ -1,20 +1,25 @@
-import { css } from '@emotion/react';
-import { motion } from 'framer-motion';
-import { APPS } from '../apps/apps';
 import { ReactNode } from 'react';
+import { APPS } from '../apps/apps';
 import { useRunApp } from '../hooks/useApp';
 import useProcesses from '../hooks/useProcesses';
 import { APP } from '../types/os';
+import { css } from '@emotion/react';
+import { motion } from 'framer-motion';
+import { useUpdateAppZindex } from '../hooks/useAppZindex';
 
 export default function Dock() {
-  const runApp = useRunApp();
   const processes = useProcesses();
+  const runApp = useRunApp();
+  const { updateAppZindex } = useUpdateAppZindex();
 
   return (
     <DockViewer
       allApps={APPS}
       runningApps={processes.map((p) => p[0])}
-      appIconOnClick={runApp}
+      appIconOnClick={(appName) => {
+        runApp(appName);
+        updateAppZindex(appName);
+      }}
     />
   );
 }

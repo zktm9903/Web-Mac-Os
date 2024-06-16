@@ -9,8 +9,9 @@ import {
 } from 'react';
 import { APPS } from '../apps/apps';
 import { useHideApp } from '../hooks/useApp';
-import useAppZindex from '../hooks/useAppZindex';
 import useProcesses from '../hooks/useProcesses';
+import useFullHeightOfAppBox from '../hooks/useFullHeightOfAppBox';
+import { useAppZindex, useUpdateAppZindex } from '../hooks/useAppZindex';
 import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
@@ -23,7 +24,6 @@ import {
 } from '../constant';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/react';
-import useFullHeightOfAppBox from '../hooks/useFullHeightOfAppBox';
 
 const FullHeightOfAppBoxContext = createContext(0);
 
@@ -154,11 +154,14 @@ export const AppViewer = ({
   yellowButtonEvent,
   greenButtonEvent,
 }: AppViewerProps) => {
-  const { appZindex, updateAppZindex } = useAppZindex(appName);
+  const { appZindex } = useAppZindex(appName);
+  const { updateAppZindex } = useUpdateAppZindex();
   const fullHeightOfAppBox = useContext(FullHeightOfAppBoxContext);
 
   return (
     <Rnd
+      disableDragging={isFullSize}
+      enableResizing={!isFullSize}
       app-box={appName}
       minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
       minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
@@ -179,7 +182,7 @@ export const AppViewer = ({
         zIndex: appZindex,
       })}
       onMouseDown={() => {
-        updateAppZindex();
+        updateAppZindex(appName);
       }}
       onDragStop={(_e, d) => {
         if (d.x < 0) setX(0);
@@ -188,8 +191,8 @@ export const AppViewer = ({
         else setY(d.y);
       }}
       onResizeStop={(_e, _direction, ref, _delta, position) => {
-        setWidth(+ref.style.width);
-        setHeight(+ref.style.height);
+        setWidth(+ref.style.width.replace('px', ''));
+        setHeight(+ref.style.height.replace('px', ''));
 
         if (position.x < 0) setX(0);
         else setX(position.x);
@@ -204,7 +207,7 @@ export const AppViewer = ({
           alignItems: 'center',
         })}>
         <ThreeButtons
-          updateAppZindex={updateAppZindex}
+          updateAppZindex={() => updateAppZindex(appName)}
           redButtonEvent={redButtonEvent}
           yellowButtonEvent={yellowButtonEvent}
           greenButtonEvent={greenButtonEvent}

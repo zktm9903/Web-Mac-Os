@@ -21,7 +21,7 @@ import { css } from '@emotion/react';
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 import dayjs from 'dayjs';
-import useAppZindex from '../../hooks/useAppZindex';
+import { useUpdateAppZindex } from '../../hooks/useAppZindex';
 
 const MemosDummy = [
   {
@@ -53,7 +53,7 @@ const Memos = ({
   setMemos: Dispatch<SetStateAction<Memo[]>>;
 }) => {
   const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-  const { updateAppZindex } = useAppZindex('memo');
+  const { updateAppZindex } = useUpdateAppZindex();
 
   // =================== 사이즈 조절 ===================
   const [width, setWidth] = useState(DEFAULT_MIN_WIDTH_OF_LEFT_BOX);
@@ -140,7 +140,7 @@ const Memos = ({
         ref={ref}
         onMouseDown={(e) => {
           e.stopPropagation();
-          updateAppZindex();
+          updateAppZindex('memo');
         }}
         css={css({
           position: 'relative',

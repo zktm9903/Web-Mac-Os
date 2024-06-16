@@ -3,7 +3,7 @@ import { APPS } from '../apps/apps';
 import useAppZindexStore from '../stores/useAppZindexStore';
 
 const useAppZindex = (appName: string) => {
-  const { appZindex, updateAppZindex } = useAppZindexStore();
+  const { appZindex } = useAppZindexStore();
   const appIdx = useMemo(
     () => APPS.findIndex((app) => app.name === appName),
     [appName]
@@ -11,8 +11,13 @@ const useAppZindex = (appName: string) => {
 
   return {
     appZindex: appZindex[appIdx],
-    updateAppZindex: () => updateAppZindex(appName),
   };
 };
 
-export default useAppZindex;
+const useUpdateAppZindex = () => {
+  const { updateAppZindex } = useAppZindexStore();
+
+  return { updateAppZindex };
+};
+
+export { useAppZindex, useUpdateAppZindex };

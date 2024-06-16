@@ -1,7 +1,8 @@
 ## mac-os
 
 - mac-os랑 최대한 비슷하게 구현해보자
-- 배포 : https://mac-os-three.vercel.app/?profile=show
+- react-app 배포 : https://mac-os-three.vercel.app/?profile=show
+- storybook 배포 : https://mac-327a70dwz-zktm9903s-projects.vercel.app/?path=/story/app-memo--primary
 
 ## 사용한 기술
 

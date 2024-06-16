@@ -19,7 +19,21 @@ export default function TopBar() {
         backdropFilter: 'blur(10px)',
       })}>
       <OsName />
-      <DateTime />
+      <div
+        css={css({
+          display: 'flex',
+          gap: 8,
+          alignContent: 'center',
+        })}>
+        <img
+          src="/catPop.gif"
+          alt="cat"
+          css={css({
+            height: '16px',
+          })}
+        />
+        <DateTime />
+      </div>
     </div>
   );
 }

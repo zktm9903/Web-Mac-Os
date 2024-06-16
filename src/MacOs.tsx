@@ -12,8 +12,7 @@ export default function MacOs() {
         justifyContent: 'center',
         height: '100vh',
         backgroundSize: 'cover',
-        backgroundImage:
-          'url("https://images.pexels.com/photos/1428277/pexels-photo-1428277.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2")',
+        backgroundImage: 'url("/backgroundImage.webp")',
       })}>
       <TopBar />
       <PlayGround />

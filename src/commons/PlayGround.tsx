@@ -159,6 +159,8 @@ export const AppViewer = ({
 
   return (
     <Rnd
+      disableDragging={isFullSize}
+      enableResizing={!isFullSize}
       app-box={appName}
       minWidth={minWidth ?? DEFAULT_MIN_WIDTH_OF_APP_BOX}
       minHeight={minHeight ?? DEFAULT_MIN_HEIGHT_OF_APP_BOX}
@@ -188,8 +190,8 @@ export const AppViewer = ({
         else setY(d.y);
       }}
       onResizeStop={(_e, _direction, ref, _delta, position) => {
-        setWidth(+ref.style.width);
-        setHeight(+ref.style.height);
+        setWidth(+ref.style.width.replace('px', ''));
+        setHeight(+ref.style.height.replace('px', ''));
 
         if (position.x < 0) setX(0);
         else setX(position.x);

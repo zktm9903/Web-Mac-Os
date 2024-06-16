@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 export default function Content() {
   return (
     <Profile
-      imgSrc={'/me3.jpg'}
+      imgSrc={'/me3.webp'}
       name={'SangCheol Lee'}
       sub={'05, 1998'}
       spec={[

@@ -201,10 +201,12 @@ export const AppViewer = ({
       }}>
       <header
         app-box-header={appName}
+        onDoubleClick={greenButtonEvent}
         css={css({
           display: 'flex',
           height: DEFAULT_HEIGHT_OF_APP_BOX_HEADER,
           alignItems: 'center',
+          cursor: 'default',
         })}>
         <ThreeButtons
           updateAppZindex={() => updateAppZindex(appName)}

@@ -4,6 +4,10 @@
 - react-app 배포 : https://mac-os-three.vercel.app/?profile=show
 - storybook 배포 : https://mac-327a70dwz-zktm9903s-projects.vercel.app/?path=/story/app-memo--primary
 
+## 미리보기
+
+<img src="https://blog.kakaocdn.net/dn/ZQOZe/btsH1CQNP3O/3kYkjqjPVmUpHSYwkopmL0/img.gif" height=200/>
+
 ## 사용한 기술
 
 - 코어 : React, Typescript

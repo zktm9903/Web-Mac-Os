@@ -1,8 +1,13 @@
 export const COLOR_OF_APP_BOX = '#291F1D';
 export const COLOR_OF_APP_BOX_BORDER = '#373737';
 
+export const HEIGHT_OF_TOPBAR = 27;
+
 export const DEFAULT_HEIGHT_OF_APP_BOX_HEADER = 50;
 export const DEFAULT_MIN_WIDTH_OF_APP_BOX = 300;
 export const DEFAULT_MIN_HEIGHT_OF_APP_BOX = 300;
 export const DEFAULT_MAX_WIDTH_OF_APP_BOX = 1000;
 export const DEFAULT_MAX_HEIGHT_OF_APP_BOX = 1000;
+
+export const MAX_BRIGHTNESS_OF_DISPLAY = 200;
+export const MIN_BRIGHTNESS_OF_DISPLAY = 0;

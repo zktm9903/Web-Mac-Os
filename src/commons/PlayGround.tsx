@@ -7,12 +7,6 @@ import {
   useContext,
   useState,
 } from 'react';
-import { APPS } from '../apps/apps';
-import { useHideApp } from '../hooks/useApp';
-import useProcesses from '../hooks/useProcesses';
-import useFullHeightOfAppBox from '../hooks/useFullHeightOfAppBox';
-import { useAppZindex, useUpdateAppZindex } from '../hooks/useAppZindex';
-import { APP, ProcessStatus } from '../types/os';
 import {
   COLOR_OF_APP_BOX,
   COLOR_OF_APP_BOX_BORDER,
@@ -22,6 +16,12 @@ import {
   DEFAULT_MIN_HEIGHT_OF_APP_BOX,
   DEFAULT_MIN_WIDTH_OF_APP_BOX,
 } from '../constant';
+import { APPS } from '../apps/apps';
+import { useHideApp } from '../hooks/useApp';
+import useProcesses from '../hooks/useProcesses';
+import useFullHeightOfAppBox from '../hooks/useFullHeightOfAppBox';
+import { useAppZindex, useUpdateAppZindex } from '../hooks/useAppZindex';
+import { APP, ProcessStatus } from '../types/os';
 import { Rnd } from 'react-rnd';
 import { css } from '@emotion/react';
 
@@ -35,9 +35,8 @@ export default function PlayGround() {
     <FullHeightOfAppBoxContext.Provider value={fullHeightOfAppBox}>
       <div
         css={css({
-          position: 'relative',
           width: '100%',
-          marginTop: '26.5px',
+          marginTop: '27px',
         })}>
         {processes.map((process) => {
           const [name, status] = process;
